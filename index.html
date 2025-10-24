@@ -20,7 +20,6 @@
       min-height: 100vh;
     }
 
-    /* Фон со звёздами */
     canvas#stars {
       position: fixed;
       top: 0;
@@ -61,6 +60,14 @@
       padding: 50px 25px;
       max-width: 750px;
       margin: 0 auto;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+    }
+
+    section.show {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     section h2 {
@@ -180,11 +187,10 @@
   </section>
 
   <footer>
-  © 2025 xxsint — made with 💻 using HTML & CSS
-</footer>
+    © 2025 xxsint — made with 💻 using HTML & CSS
+  </footer>
 
   <script>
-    // Анимированные звёзды
     const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
     let stars = [];
@@ -196,25 +202,30 @@
     window.addEventListener('resize', resize);
     resize();
 
-    for (let i = 0; i < 150; i++) {
+    // Создаем звезды с мерцанием
+    for (let i = 0; i < 200; i++) {
       stars.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         r: Math.random() * 1.5,
-        d: Math.random() * 1.5
+        d: Math.random() * 1.5,
+        twinkleSpeed: Math.random() * 0.02 + 0.01,
+        opacity: Math.random()
       });
     }
 
     function drawStars() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-      ctx.beginPath();
       for (let i = 0; i < stars.length; i++) {
         const s = stars[i];
-        ctx.moveTo(s.x, s.y);
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+        s.opacity += s.twinkleSpeed;
+        if (s.opacity > 1 || s.opacity < 0) s.twinkleSpeed = -s.twinkleSpeed;
+
+        ctx.fillStyle = `rgba(255,255,255,${s.opacity})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fill();
       }
-      ctx.fill();
       updateStars();
     }
 
@@ -227,7 +238,7 @@
         s.x += Math.sin(angle) * 0.3;
 
         if (s.y > canvas.height) {
-          stars[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d };
+          stars[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d, twinkleSpeed: s.twinkleSpeed, opacity: s.opacity };
         }
       }
     }
@@ -237,6 +248,18 @@
       requestAnimationFrame(animate);
     }
     animate();
+
+    // Появление секций при скролле
+    const sections = document.querySelectorAll('section');
+    function revealSections() {
+      const triggerBottom = window.innerHeight * 0.85;
+      sections.forEach(sec => {
+        const top = sec.getBoundingClientRect().top;
+        if(top < triggerBottom) sec.classList.add('show');
+      });
+    }
+    window.addEventListener('scroll', revealSections);
+    revealSections();
   </script>
 
 </body>
