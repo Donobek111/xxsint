@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xxsint | Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Фон со звёздами */
+    canvas#stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 100px 20px 50px;
+      position: relative;
+      z-index: 2;
+    }
+
+    header h1 {
+      font-size: 2.6em;
+      color: #d0a8ff;
+      text-shadow: 0 0 15px #b47fff, 0 0 30px #7a00ff;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #b47fff, 0 0 25px #7a00ff; }
+      to { text-shadow: 0 0 25px #c77dff, 0 0 45px #8a2be2; }
+    }
+
+    header p {
+      font-size: 1.1em;
+      color: #ccc;
+      margin-top: 12px;
+    }
+
+    section {
+      position: relative;
+      z-index: 2;
+      padding: 50px 25px;
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      color: #c9a3ff;
+      margin-bottom: 15px;
+      font-size: 1.6em;
+      border-left: 4px solid #b47fff;
+      padding-left: 10px;
+    }
+
+    section p {
+      color: #ddd;
+      line-height: 1.7em;
+      margin-bottom: 25px;
+    }
+
+    .rules {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 25px;
+      margin-top: 15px;
+      box-shadow: 0 0 20px rgba(100, 0, 255, 0.2);
+    }
+
+    .rules li {
+      margin-bottom: 10px;
+      color: #ccc;
+      line-height: 1.6em;
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 25px;
+      align-items: flex-start;
+    }
+
+    .links a {
+      text-decoration: none;
+      background: linear-gradient(90deg, #5a189a, #3a0ca3);
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: #fff;
+      font-weight: 600;
+      transition: 0.3s;
+      box-shadow: 0 0 12px rgba(130, 0, 255, 0.4);
+    }
+
+    .links a:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(200, 0, 255, 0.8);
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 20px;
+      color: #777;
+      font-size: 0.9em;
+      z-index: 2;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="stars"></canvas>
+
+  <header>
+    <h1>Ты на сайте <span style="color:#b47fff;">xxsint</span></h1>
+    <p>Добро пожаловать в мой цифровой мир.</p>
+  </header>
+
+  <section>
+    <h2>🦇 Кто я</h2>
+    <p>
+      Меня зовут <b>xxsint</b> — я занимаюсь созданием <b>сайтов, Telegram-ботов и приложений</b> под заказ.
+      Моя работа — это сочетание дизайна, логики и точности.  
+      Я интересуюсь <b>OSINT</b> и анализом данных, использую технологии для поиска информации и защиты цифровой идентичности.  
+      Также участвую в разработке инструментов автоматизации и аналитики.  
+      Моя цель — создавать проекты, которые выглядят мощно и работают стабильно.  
+    </p>
+  </section>
+
+  <section>
+    <h2>💼 Чем я занимаюсь</h2>
+    <p>
+      🔹 Разработка сайтов любой сложности: от персональных страниц до коммерческих платформ.  
+      🔹 Создание Telegram-ботов для бизнеса, команд и личного использования.  
+      🔹 Проектирование интерфейсов и визуальных решений в современном минималистичном стиле.  
+      🔹 Работа с API, парсингом, автоматизацией процессов и кибербезопасностью.  
+    </p>
+  </section>
+
+  <section>
+    <h2>📏 Правила общения с @louderov</h2>
+    <div class="rules">
+      <ul>
+        <li>1. Пишите по делу и уважительно — без спама и лишних сообщений.</li>
+        <li>2. Уважайте личные границы и время — ответы даются по возможности.</li>
+        <li>3. Если я не ответил — не дублируйте сразу, напомните позже.</li>
+        <li>4. Не допускаются оскорбления, угрозы или навязчивое поведение.</li>
+        <li>5. Попытки обмана, фейков и провокаций приводят к мгновенному игнору.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>📩 Контакты</h2>
+    <p>Свяжись со мной через Telegram или посмотри мои другие ссылки:</p>
+    <div class="links">
+      <a href="https://t.me/xxsint" target="_blank">Telegram</a>
+      <a href="https://t.me/pricebylouderov/3" target="_blank">Price</a>
+      <a href="https://t.me/defxxsint" target="_blank">Def</a>
+    </div>
+  </section>
+
+  <footer>
+  © 2025 xxsint — made with 💻 using HTML & CSS
+</footer>
+
+  <script>
+    // Анимированные звёзды
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5,
+        d: Math.random() * 1.5
+      });
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+      ctx.beginPath();
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        ctx.moveTo(s.x, s.y);
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+      }
+      ctx.fill();
+      updateStars();
+    }
+
+    let angle = 0;
+    function updateStars() {
+      angle += 0.001;
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        s.y += Math.cos(angle + s.d) + 0.4;
+        s.x += Math.sin(angle) * 0.3;
+
+        if (s.y > canvas.height) {
+          stars[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d };
+        }
+      }
+    }
+
+    function animate() {
+      drawStars();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+
+</body>
+</html>
