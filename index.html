@@ -6,130 +6,115 @@
   <title>xxsint | Bio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
     body {
       background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
-      color: #fff;
-      overflow-x: hidden;
-      min-height: 100vh;
+      color:#fff;
+      overflow-x:hidden;
+      min-height:100vh;
     }
 
     canvas#stars {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:0;
     }
 
     header {
-      text-align: center;
-      padding: 100px 20px 50px;
-      position: relative;
-      z-index: 2;
+      text-align:center;
+      padding:100px 20px 50px;
+      position:relative;
+      z-index:2;
     }
 
     header h1 {
-      font-size: 2.6em;
-      color: #d0a8ff;
-      text-shadow: 0 0 15px #b47fff, 0 0 30px #7a00ff;
+      font-size:2.6em;
+      color:#d0a8ff;
+      text-shadow:0 0 15px #b47fff,0 0 30px #7a00ff;
       animation: glow 3s ease-in-out infinite alternate;
+      transition: transform 0.3s;
     }
 
     @keyframes glow {
-      from { text-shadow: 0 0 10px #b47fff, 0 0 25px #7a00ff; }
-      to { text-shadow: 0 0 25px #c77dff, 0 0 45px #8a2be2; }
+      from { text-shadow:0 0 10px #b47fff,0 0 25px #7a00ff; }
+      to { text-shadow:0 0 25px #c77dff,0 0 45px #8a2be2; }
     }
 
     header p {
-      font-size: 1.1em;
-      color: #ccc;
-      margin-top: 12px;
+      font-size:1.1em; color:#ccc; margin-top:12px;
     }
 
     section {
       position: relative;
-      z-index: 2;
-      padding: 50px 25px;
-      max-width: 750px;
-      margin: 0 auto;
-      opacity: 0;
-      transform: translateY(50px);
+      z-index:2;
+      padding:50px 25px;
+      max-width:750px;
+      margin:0 auto;
+      opacity:0;
+      transform: translateY(50px) scale(0.95);
       transition: all 1s ease-out;
     }
 
     section.show {
-      opacity: 1;
-      transform: translateY(0);
+      opacity:1;
+      transform: translateY(0) scale(1);
+      text-shadow: 0 0 20px #b47fff;
     }
 
     section h2 {
-      color: #c9a3ff;
-      margin-bottom: 15px;
-      font-size: 1.6em;
-      border-left: 4px solid #b47fff;
-      padding-left: 10px;
+      color:#c9a3ff;
+      margin-bottom:15px;
+      font-size:1.6em;
+      border-left:4px solid #b47fff;
+      padding-left:10px;
     }
 
     section p {
-      color: #ddd;
-      line-height: 1.7em;
-      margin-bottom: 25px;
+      color:#ddd;
+      line-height:1.7em;
+      margin-bottom:25px;
     }
 
     .rules {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      padding: 25px;
-      margin-top: 15px;
-      box-shadow: 0 0 20px rgba(100, 0, 255, 0.2);
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:15px;
+      padding:25px;
+      margin-top:15px;
+      box-shadow:0 0 20px rgba(100,0,255,0.2);
     }
 
-    .rules li {
-      margin-bottom: 10px;
-      color: #ccc;
-      line-height: 1.6em;
-    }
+    .rules li { margin-bottom:10px; color:#ccc; line-height:1.6em; }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 25px;
-      align-items: flex-start;
-    }
+    .links { display:flex; flex-direction:column; gap:15px; margin-top:25px; align-items:flex-start; }
 
     .links a {
-      text-decoration: none;
-      background: linear-gradient(90deg, #5a189a, #3a0ca3);
-      padding: 12px 25px;
-      border-radius: 30px;
-      color: #fff;
-      font-weight: 600;
-      transition: 0.3s;
-      box-shadow: 0 0 12px rgba(130, 0, 255, 0.4);
+      text-decoration:none;
+      background: linear-gradient(90deg,#5a189a,#3a0ca3);
+      padding:12px 25px;
+      border-radius:30px;
+      color:#fff;
+      font-weight:600;
+      transition: 0.5s;
+      box-shadow: 0 0 12px rgba(130,0,255,0.4);
+      opacity:0;
+      transform: scale(0.8);
     }
 
-    .links a:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(200, 0, 255, 0.8);
+    .links a.show {
+      opacity:1;
+      transform: scale(1);
+      box-shadow:0 0 20px rgba(200,0,255,0.8);
     }
 
     footer {
-      text-align: center;
-      padding: 60px 20px;
-      color: #777;
-      font-size: 0.9em;
-      z-index: 2;
-      position: relative;
+      text-align:center;
+      padding:60px 20px;
+      color:#777;
+      font-size:0.9em;
+      z-index:2;
+      position:relative;
     }
   </style>
 </head>
@@ -202,64 +187,68 @@
     window.addEventListener('resize', resize);
     resize();
 
-    // Создаем звезды с мерцанием
-    for (let i = 0; i < 200; i++) {
+    // Мерцающие звезды
+    for (let i=0;i<200;i++){
       stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.5,
-        d: Math.random() * 1.5,
-        twinkleSpeed: Math.random() * 0.02 + 0.01,
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*1.5,
+        d:Math.random()*1.5,
+        twinkleSpeed: Math.random()*0.02+0.01,
         opacity: Math.random()
       });
     }
 
-    function drawStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
+    let angle=0;
+    function updateStars(){
+      angle+=0.001;
+      for(let i=0;i<stars.length;i++){
+        const s=stars[i];
+        s.y += Math.cos(angle+s.d)+0.4;
+        s.x += Math.sin(angle)*0.3;
         s.opacity += s.twinkleSpeed;
-        if (s.opacity > 1 || s.opacity < 0) s.twinkleSpeed = -s.twinkleSpeed;
+        if(s.opacity>1||s.opacity<0) s.twinkleSpeed=-s.twinkleSpeed;
 
-        ctx.fillStyle = `rgba(255,255,255,${s.opacity})`;
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
-        ctx.fill();
-      }
-      updateStars();
-    }
-
-    let angle = 0;
-    function updateStars() {
-      angle += 0.001;
-      for (let i = 0; i < stars.length; i++) {
-        const s = stars[i];
-        s.y += Math.cos(angle + s.d) + 0.4;
-        s.x += Math.sin(angle) * 0.3;
-
-        if (s.y > canvas.height) {
-          stars[i] = { x: Math.random() * canvas.width, y: 0, r: s.r, d: s.d, twinkleSpeed: s.twinkleSpeed, opacity: s.opacity };
+        if(s.y>canvas.height){
+          stars[i]={x:Math.random()*canvas.width,y:0,r:s.r,d:s.d,twinkleSpeed:s.twinkleSpeed,opacity:s.opacity};
         }
       }
     }
 
-    function animate() {
-      drawStars();
-      requestAnimationFrame(animate);
+    function drawStars(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=0;i<stars.length;i++){
+        const s=stars[i];
+        ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;
+        ctx.beginPath();
+        ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fill();
+      }
+      updateStars();
+      requestAnimationFrame(drawStars);
     }
-    animate();
+    drawStars();
 
-    // Появление секций при скролле
-    const sections = document.querySelectorAll('section');
-    function revealSections() {
-      const triggerBottom = window.innerHeight * 0.85;
-      sections.forEach(sec => {
-        const top = sec.getBoundingClientRect().top;
-        if(top < triggerBottom) sec.classList.add('show');
+    // Анимация секций и ссылок при заходе
+    const sections=document.querySelectorAll('section');
+    const links=document.querySelectorAll('.links a');
+
+    window.addEventListener('load',()=>{
+      sections.forEach((sec,i)=>{
+        setTimeout(()=>{ sec.classList.add('show'); }, i*400);
       });
-    }
-    window.addEventListener('scroll', revealSections);
-    revealSections();
+      links.forEach((link,i)=>{
+        setTimeout(()=>{ link.classList.add('show'); }, sections.length*400 + i*200);
+      });
+    });
+
+    // Параллакс заголовка
+    const headerH1=document.querySelector('header h1');
+    document.addEventListener('mousemove',e=>{
+      const x=(e.clientX - window.innerWidth/2)/50;
+      const y=(e.clientY - window.innerHeight/2)/50;
+      headerH1.style.transform=`translate(${x}px, ${y}px)`;
+    });
   </script>
 
 </body>
