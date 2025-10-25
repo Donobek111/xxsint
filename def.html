@@ -6,34 +6,44 @@
   <title>Def | xxsint</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     body {
       background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      overflow: hidden;
+      color:#fff;
+      overflow:hidden;
+      opacity:0;
+      transform:translateY(30px);
+      transition:opacity 1s ease, transform 1s ease;
     }
-    canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
+    body.loaded { opacity:1; transform:translateY(0); }
+    body.fade-out { opacity:0; transform:translateY(20px); }
+
+    canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
+
     .content {
-      position: relative; z-index:2;
+      position:relative; z-index:2;
       text-align:center;
       padding:100px 20px;
     }
+
     h1 {
       font-size:2.2em;
       color:#cfaaff;
       text-shadow:0 0 20px #b47fff,0 0 40px #7a00ff;
-      animation: glow 3s ease-in-out infinite alternate;
+      animation:glow 3s ease-in-out infinite alternate;
     }
     @keyframes glow {
       from { text-shadow:0 0 10px #b47fff,0 0 25px #7a00ff; }
       to { text-shadow:0 0 25px #c77dff,0 0 45px #8a2be2; }
     }
+
     p {
       font-size:1.1em;
       color:#ddd;
       margin-top:20px;
       line-height:1.8em;
     }
+
     a {
       display:inline-block;
       margin-top:30px;
@@ -44,8 +54,15 @@
       text-decoration:none;
       font-weight:600;
       box-shadow:0 0 15px rgba(130,0,255,0.4);
-      transition:0.3s;
+      transition:all 0.4s ease;
+      position:relative;
+      overflow:hidden;
     }
+    a::after {
+      content:''; position:absolute; left:-100%; top:0; width:100%; height:100%;
+      background:rgba(255,255,255,0.15); transition:left 0.4s ease;
+    }
+    a:hover::after { left:100%; }
     a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(200,0,255,0.8); }
   </style>
 </head>
@@ -63,10 +80,37 @@
   </div>
 
   <script>
+    // --- Звёзды ---
     const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
     function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();addEventListener('resize',resize);
     for(let i=0;i<200;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5,d:Math.random()*1.5,twinkleSpeed:Math.random()*0.02+0.01,opacity:Math.random()});
-    let angle=0;function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);for(let s of stars){s.y+=Math.cos(angle+s.d)+0.4;s.x+=Math.sin(angle)*0.3;s.opacity+=s.twinkleSpeed;if(s.opacity>1||s.opacity<0)s.twinkleSpeed=-s.twinkleSpeed;if(s.y>canvas.height)s.y=0;ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}angle+=0.001;requestAnimationFrame(drawStars);}drawStars();
+    let angle=0;
+    function drawStars(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let s of stars){
+        s.y+=Math.cos(angle+s.d)+0.4;
+        s.x+=Math.sin(angle)*0.3;
+        s.opacity+=s.twinkleSpeed;
+        if(s.opacity>1||s.opacity<0)s.twinkleSpeed=-s.twinkleSpeed;
+        if(s.y>canvas.height)s.y=0;
+        ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+      }
+      angle+=0.001;requestAnimationFrame(drawStars);
+    } drawStars();
+
+    // --- Появление страницы ---
+    window.addEventListener('load',()=>document.body.classList.add('loaded'));
+
+    // --- Плавный переход ---
+    document.querySelectorAll('a[href]').forEach(link=>{
+      link.addEventListener('click',e=>{
+        e.preventDefault();
+        const url=link.getAttribute('href');
+        document.body.classList.add('fade-out');
+        setTimeout(()=>window.location.href=url,600);
+      });
+    });
   </script>
 </body>
 </html>
