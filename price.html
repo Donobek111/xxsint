@@ -3,67 +3,72 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Price</title>
+  <title>Price | xxsint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #0f0f0f;
+      background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
       color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 40px;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
     }
-
+    canvas { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
+    .content {
+      position: relative; z-index:2;
+      text-align:center;
+      padding:100px 20px;
+    }
     h1 {
-      margin-bottom: 30px;
-      font-size: 2.2rem;
-      color: #22c55e;
-      text-shadow: 0 0 8px #22c55e;
+      font-size:2.2em;
+      color:#cfaaff;
+      text-shadow:0 0 20px #b47fff,0 0 40px #7a00ff;
+      animation: glow 3s ease-in-out infinite alternate;
     }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(34, 197, 94, 0.4);
-      border-radius: 20px;
-      width: 350px;
-      min-height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      transition: 0.3s;
-      box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
-      padding: 20px;
+    @keyframes glow {
+      from { text-shadow:0 0 10px #b47fff,0 0 25px #7a00ff; }
+      to { text-shadow:0 0 25px #c77dff,0 0 45px #8a2be2; }
     }
-
-    .card:hover {
-      box-shadow: 0 0 25px rgba(34, 197, 94, 0.7);
-      transform: translateY(-5px);
-      border-color: #22c55e;
+    p {
+      font-size:1.1em;
+      color:#ddd;
+      margin-top:20px;
+      line-height:1.8em;
     }
-
     a {
-      color: #22c55e;
-      margin-top: 25px;
-      text-decoration: none;
-      transition: 0.3s;
+      display:inline-block;
+      margin-top:30px;
+      background:linear-gradient(90deg,#5a189a,#3a0ca3);
+      padding:12px 30px;
+      border-radius:30px;
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 0 15px rgba(130,0,255,0.4);
+      transition:0.3s;
     }
-
-    a:hover {
-      text-shadow: 0 0 8px #22c55e;
-    }
+    a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(200,0,255,0.8); }
   </style>
 </head>
 <body>
-  <h1>Price</h1>
-  <div class="card">
-    <p>Здесь можно указать цены, тарифы, описание пакетов услуг или ссылки на оплату.</p>
+  <canvas id="stars"></canvas>
+  <div class="content">
+    <h1>🍴Price by @xxsint</h1>
+    <p>
+      Пр*бив — <b>125⭐️</b><br>
+      Найду всю информацию о обидчике.<br><br>
+      Обучение — <b>1000⭐️</b><br>
+      В обучение входят приватки, обучение OSINT и сносу, а также создание бота или сайта через HTML.<br><br>
+      Заказ на сайт или бота пишите сюда: <b>@xxsint</b><br><br>
+      🏴‍☠️ Оплата возможна Stars / NFT
+    </p>
+    <a href="index.html">⬅ Вернуться</a>
   </div>
 
-  <a href="index.html">⬅ Вернуться на главную</a>
+  <script>
+    const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
+    function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();addEventListener('resize',resize);
+    for(let i=0;i<200;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5,d:Math.random()*1.5,twinkleSpeed:Math.random()*0.02+0.01,opacity:Math.random()});
+    let angle=0;function drawStars(){ctx.clearRect(0,0,canvas.width,canvas.height);for(let s of stars){s.y+=Math.cos(angle+s.d)+0.4;s.x+=Math.sin(angle)*0.3;s.opacity+=s.twinkleSpeed;if(s.opacity>1||s.opacity<0)s.twinkleSpeed=-s.twinkleSpeed;if(s.y>canvas.height)s.y=0;ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();}angle+=0.001;requestAnimationFrame(drawStars);}drawStars();
+  </script>
 </body>
 </html>
