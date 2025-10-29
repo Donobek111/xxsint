@@ -9,7 +9,7 @@
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
     body {
-      background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
+      background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
       color:#fff;
       overflow:hidden;
       opacity:0;
@@ -24,7 +24,7 @@
       top:0; left:0;
       width:100%; height:100%;
       z-index:0;
-      background: radial-gradient(circle at bottom, #120028 0%, #050010 100%);
+      background: radial-gradient(circle at bottom, #002b36 0%, #000a10 100%);
     }
 
     .content {
@@ -38,27 +38,27 @@
 
     h1 {
       font-size:2.6em;
-      color:#cfaaff;
-      text-shadow:0 0 20px #b47fff,0 0 40px #7a00ff;
+      color:#00ffcc;
+      text-shadow:0 0 25px #00e6b8, 0 0 50px #00b3ff;
       animation:glow 3s ease-in-out infinite alternate;
     }
     @keyframes glow {
-      from { text-shadow:0 0 10px #b47fff,0 0 25px #7a00ff; }
-      to { text-shadow:0 0 25px #c77dff,0 0 45px #8a2be2; }
+      from { text-shadow:0 0 15px #00b3ff, 0 0 30px #00ffc3; }
+      to { text-shadow:0 0 30px #00ffff, 0 0 60px #00b3ff; }
     }
 
     h2 {
       margin-top:60px;
       font-size:1.6em;
-      color:#c9a3ff;
-      border-left:4px solid #b47fff;
+      color:#7df9ff;
+      border-left:4px solid #00ffcc;
       padding-left:10px;
       text-align:left;
     }
 
     p {
       font-size:1.05em;
-      color:#ddd;
+      color:#d9fffc;
       margin-top:15px;
       line-height:1.8em;
       text-align:left;
@@ -74,58 +74,56 @@
 
     a {
       display:inline-block;
-      background:linear-gradient(90deg,#5a189a,#3a0ca3);
+      background:linear-gradient(90deg,#00b3ff,#00ffcc);
       padding:12px 30px;
       border-radius:30px;
-      color:#fff;
+      color:#002b36;
       text-decoration:none;
       font-weight:600;
-      box-shadow:0 0 15px rgba(130,0,255,0.4);
+      box-shadow:0 0 20px rgba(0,255,200,0.6);
       transition:all 0.4s ease;
       position:relative;
       overflow:hidden;
     }
     a::after {
       content:''; position:absolute; left:-100%; top:0; width:100%; height:100%;
-      background:rgba(255,255,255,0.15); transition:left 0.4s ease;
+      background:rgba(255,255,255,0.25); transition:left 0.4s ease;
     }
     a:hover::after { left:100%; }
-    a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(200,0,255,0.8); }
+    a:hover { transform:scale(1.05); box-shadow:0 0 30px rgba(0,255,255,0.8); }
 
     footer {
       text-align:center;
-      color:#777;
+      color:#80c7c7;
       font-size:0.9em;
       margin-top:80px;
     }
   </style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <canvas id="waves"></canvas>
 
   <div class="content">
-    <h1>Добро пожаловать на сайт — <span style="color:#b47fff;">xxsint</span></h1>
-    <p>Ты в моем цифровом мире.</p>
+    <h1>Добро пожаловать в мир <span style="color:#00ffcc;">xxsint</span></h1>
+    <p>Ты в моём цифровом пространстве.</p>
 
     <h2>🦇 Кто я</h2>
     <p>
-      Мой юзернэйм <b>@xxsint</b> — я занимаюсь созданием <b>сайтов, Telegram-ботов и приложений</b> под заказ.  
-      Моя работа — это сочетание дизайна, логики и точности.  
-      Я интересуюсь <b>OSINT</b> и анализом данных, использую технологии для поиска информации и защиты цифровой идентичности.  
-      Также участвую в разработке инструментов автоматизации и аналитики.  
-      Моя цель — создавать проекты, которые выглядят мощно и работают стабильно.
+      Я — <b>@xxsint</b>. Занимаюсь созданием <b>сайтов, Telegram-ботов и приложений</b>.  
+      Люблю сочетание дизайна, логики и технологии.  
+      Изучаю <b>OSINT</b> и анализ данных, автоматизацию и кибербезопасность.
     </p>
 
-    <h2>💼 Чем я занимаюсь</h2>
+    <h2>💼 Что я делаю</h2>
     <p>
-      🔹 Разработка сайтов любой сложности: от персональных страниц до коммерческих платформ.  
-      🔹 Создание Telegram-ботов для бизнеса, команд и личного использования.  
-      🔹 Проектирование интерфейсов и визуальных решений в современном минималистичном стиле.  
-      🔹 Работа с API, парсингом, автоматизацией процессов и кибербезопасностью.
+      🔹 Создание сайтов и интерфейсов.<br>
+      🔹 Telegram-боты для бизнеса и автоматизации.<br>
+      🔹 Парсинг, API, анализ данных, OSINT.<br>
+      🔹 Эстетика минимализма и точности.
     </p>
 
     <h2>📩 Контакты</h2>
-    <p>Свяжись со мной через Telegram или перейди на другие страницы:</p>
+    <p>Свяжись со мной:</p>
     <div class="links">
       <a href="https://t.me/xxsint" target="_blank">Telegram</a>
       <a href="price.html">Price</a>
@@ -136,63 +134,38 @@
   </div>
 
   <script>
-    // === Оптимизированные "летящие" звёзды ===
-    const canvas = document.getElementById("stars");
+    // === Волны вместо звёзд ===
+    const canvas = document.getElementById("waves");
     const ctx = canvas.getContext("2d");
-    let stars = [];
-    let w, h, centerX, centerY;
+    let w, h, t = 0;
 
     function resize() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
-      centerX = w / 2;
-      centerY = h / 2;
-      stars = [];
-      for (let i = 0; i < 150; i++) {
-        stars.push({
-          x: (Math.random() - 0.5) * w,
-          y: (Math.random() - 0.5) * h,
-          z: Math.random() * w,
-          o: Math.random()
-        });
-      }
     }
     window.addEventListener("resize", resize);
     resize();
 
-    function animate() {
-      ctx.fillStyle = "rgba(0, 0, 20, 0.4)";
-      ctx.fillRect(0, 0, w, h);
-
-      for (let s of stars) {
-        s.z -= 6; // скорость "полёта"
-        if (s.z <= 0) {
-          s.z = w;
-          s.x = (Math.random() - 0.5) * w;
-          s.y = (Math.random() - 0.5) * h;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, h / 2);
+        for (let x = 0; x < w; x++) {
+          const y = Math.sin((x + t * 50) / (100 + i * 50)) * (20 + i * 10) + h / 2;
+          ctx.lineTo(x, y);
         }
-
-        const k = 128.0 / s.z;
-        const px = s.x * k + centerX;
-        const py = s.y * k + centerY;
-
-        if (px >= 0 && px < w && py >= 0 && py < h) {
-          const size = (1 - s.z / w) * 2.2;
-          ctx.beginPath();
-          ctx.fillStyle = `rgba(255,255,255,${s.o})`;
-          ctx.arc(px, py, size, 0, Math.PI * 2);
-          ctx.fill();
-        }
+        ctx.strokeStyle = `rgba(${0},${255 - i*60},${200 + i*30},0.3)`;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
       }
-
-      requestAnimationFrame(animate);
+      t += 0.015;
+      requestAnimationFrame(draw);
     }
-    animate();
+    draw();
 
-    // === Появление страницы ===
     window.addEventListener("load", () => document.body.classList.add("loaded"));
 
-    // === Плавный переход ===
     document.querySelectorAll("a[href]").forEach(link => {
       if (link.getAttribute("target") !== "_blank") {
         link.addEventListener("click", e => {
