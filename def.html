@@ -8,7 +8,7 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     body {
-      background: radial-gradient(circle at bottom, #15002b 0%, #0a0017 100%);
+      background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
       color:#fff;
       overflow:hidden;
       opacity:0;
@@ -20,56 +20,36 @@
 
     canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
 
-    .content {
-      position:relative; z-index:2;
-      text-align:center;
-      padding:100px 20px;
-    }
+    .content { position:relative; z-index:2; text-align:center; padding:100px 20px; }
 
     h1 {
-      font-size:2.2em;
-      color:#cfaaff;
-      text-shadow:0 0 20px #b47fff,0 0 40px #7a00ff;
+      font-size:2.3em;
+      color:#00ffcc;
+      text-shadow:0 0 20px #00b3ff,0 0 40px #00ffff;
       animation:glow 3s ease-in-out infinite alternate;
     }
     @keyframes glow {
-      from { text-shadow:0 0 10px #b47fff,0 0 25px #7a00ff; }
-      to { text-shadow:0 0 25px #c77dff,0 0 45px #8a2be2; }
+      from { text-shadow:0 0 10px #00b3ff; }
+      to { text-shadow:0 0 30px #00ffff; }
     }
 
-    p {
-      font-size:1.1em;
-      color:#ddd;
-      margin-top:20px;
-      line-height:1.8em;
-    }
+    p { font-size:1.1em; color:#d9fffc; margin-top:20px; line-height:1.8em; }
 
     a {
-      display:inline-block;
-      margin-top:30px;
-      background:linear-gradient(90deg,#5a189a,#3a0ca3);
-      padding:12px 30px;
-      border-radius:30px;
-      color:#fff;
-      text-decoration:none;
-      font-weight:600;
-      box-shadow:0 0 15px rgba(130,0,255,0.4);
-      transition:all 0.4s ease;
-      position:relative;
-      overflow:hidden;
+      display:inline-block; margin-top:30px;
+      background:linear-gradient(90deg,#00b3ff,#00ffcc);
+      padding:12px 30px; border-radius:30px;
+      color:#002b36; text-decoration:none;
+      font-weight:600; box-shadow:0 0 20px rgba(0,255,200,0.6);
+      transition:all 0.4s ease; position:relative; overflow:hidden;
     }
-    a::after {
-      content:''; position:absolute; left:-100%; top:0; width:100%; height:100%;
-      background:rgba(255,255,255,0.15); transition:left 0.4s ease;
-    }
-    a:hover::after { left:100%; }
-    a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(200,0,255,0.8); }
+    a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(0,255,255,0.8); }
   </style>
 </head>
 <body>
-  <canvas id="stars"></canvas>
+  <canvas id="waves"></canvas>
   <div class="content">
-    <h1>💼 Защита в интернете (deff)</h1>
+    <h1>💼 Защита в интернете (def)</h1>
     <p>
       Месяц — <b>100⭐️</b><br>
       Люкс месяц — <b>250⭐️</b><br>
@@ -80,29 +60,27 @@
   </div>
 
   <script>
-    // --- Звёзды ---
-    const canvas=document.getElementById('stars'),ctx=canvas.getContext('2d');let stars=[];
-    function resize(){canvas.width=innerWidth;canvas.height=innerHeight;}resize();addEventListener('resize',resize);
-    for(let i=0;i<200;i++)stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5,d:Math.random()*1.5,twinkleSpeed:Math.random()*0.02+0.01,opacity:Math.random()});
-    let angle=0;
-    function drawStars(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(let s of stars){
-        s.y+=Math.cos(angle+s.d)+0.4;
-        s.x+=Math.sin(angle)*0.3;
-        s.opacity+=s.twinkleSpeed;
-        if(s.opacity>1||s.opacity<0)s.twinkleSpeed=-s.twinkleSpeed;
-        if(s.y>canvas.height)s.y=0;
-        ctx.fillStyle=`rgba(255,255,255,${s.opacity})`;
-        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+    const canvas=document.getElementById('waves'),ctx=canvas.getContext('2d');
+    let w,h,t=0;
+    function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
+    resize();addEventListener('resize',resize);
+
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      for(let i=0;i<3;i++){
+        ctx.beginPath();
+        for(let x=0;x<w;x++){
+          const y=Math.sin((x+t*50)/(100+i*40))*(15+i*8)+h/2;
+          ctx.lineTo(x,y);
+        }
+        ctx.strokeStyle=`rgba(0,255,${200+i*30},0.3)`;
+        ctx.lineWidth=1.8;ctx.stroke();
       }
-      angle+=0.001;requestAnimationFrame(drawStars);
-    } drawStars();
+      t+=0.015;requestAnimationFrame(draw);
+    }
+    draw();
 
-    // --- Появление страницы ---
     window.addEventListener('load',()=>document.body.classList.add('loaded'));
-
-    // --- Плавный переход ---
     document.querySelectorAll('a[href]').forEach(link=>{
       link.addEventListener('click',e=>{
         e.preventDefault();
