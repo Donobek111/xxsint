@@ -11,10 +11,11 @@
     body {
       background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
       color:#fff;
-      overflow:hidden;
+      overflow-x:hidden; /* ✅ вертикальная прокрутка разрешена */
       opacity:0;
       transform:translateY(30px);
       transition:opacity 1s ease, transform 1s ease;
+      min-height:100vh;
     }
     body.loaded { opacity:1; transform:translateY(0); }
     body.fade-out { opacity:0; transform:translateY(20px); }
@@ -109,8 +110,8 @@
 
     <h2>🦇 Кто я</h2>
     <p>
-      Я — <b>@xxsint</b>. Занимаюсь созданием <b>сайтов, Telegram-ботов и приложений</b>.  
-      Люблю сочетание дизайна, логики и технологии.  
+      Я — <b>@xxsint</b>. Занимаюсь созданием <b>сайтов, Telegram-ботов и приложений</b>.<br>
+      Люблю сочетание дизайна, логики и технологии.<br>
       Изучаю <b>OSINT</b> и анализ данных, автоматизацию и кибербезопасность.
     </p>
 
@@ -134,11 +135,9 @@
   </div>
 
   <script>
-    // === Волны вместо звёзд ===
     const canvas = document.getElementById("waves");
     const ctx = canvas.getContext("2d");
     let w, h, t = 0;
-
     function resize() {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
@@ -150,7 +149,6 @@
       ctx.clearRect(0, 0, w, h);
       for (let i = 0; i < 3; i++) {
         ctx.beginPath();
-        ctx.moveTo(0, h / 2);
         for (let x = 0; x < w; x++) {
           const y = Math.sin((x + t * 50) / (100 + i * 50)) * (20 + i * 10) + h / 2;
           ctx.lineTo(x, y);
@@ -165,7 +163,6 @@
     draw();
 
     window.addEventListener("load", () => document.body.classList.add("loaded"));
-
     document.querySelectorAll("a[href]").forEach(link => {
       if (link.getAttribute("target") !== "_blank") {
         link.addEventListener("click", e => {
