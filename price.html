@@ -1,110 +1,229 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XXSINT - Прайс</title>
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
-    color: #fff;
-    overflow-x: hidden; /* теперь можно прокручивать страницу */
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-  body.loaded {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  h1 {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 2.2em;
-  }
-  .price-list {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0,255,255,0.1);
-  }
-  .section {
-    margin-bottom: 25px;
-  }
-  .section h2 {
-    font-size: 1.4em;
-    color: #00bfff;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  .section p {
-    margin: 5px 0;
-    text-align: center;
-    font-size: 1.05em;
-  }
-  .back {
-    display: block;
-    width: fit-content;
-    margin: 30px auto;
-    background: #00bfff;
-    color: #fff;
-    padding: 12px 25px;
-    text-decoration: none;
-    border-radius: 10px;
-    transition: background 0.3s;
-  }
-  .back:hover {
-    background: #0099cc;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Price | xxsint</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+
+    body {
+      background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
+      color:#fff;
+      overflow-x: hidden; /* вертикальная прокрутка разрешена */
+      opacity:0;
+      transform:translateY(30px);
+      transition:opacity 1s ease, transform 1s ease;
+      min-height:100vh;
+    }
+    body.loaded { opacity:1; transform:translateY(0); }
+    body.fade-out { opacity:0; transform:translateY(20px); }
+
+    /* Canvas (волны) */
+    canvas {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:0;
+      background: radial-gradient(circle at bottom, #002b36 0%, #000a10 100%);
+    }
+
+    .content {
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:80px 20px 120px;
+      max-width:800px;
+      margin:0 auto;
+    }
+
+    h1 {
+      font-size:2.3em;
+      color:#00ffcc;
+      text-shadow:0 0 25px #00e6b8, 0 0 50px #00b3ff;
+      animation:glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow:0 0 15px #00b3ff, 0 0 30px #00ffc3; }
+      to { text-shadow:0 0 30px #00ffff, 0 0 60px #00b3ff; }
+    }
+
+    .price-list {
+      margin: 30px auto 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+      max-width:680px;
+      color:#d9fffc;
+    }
+
+    .section { margin-bottom:18px; padding:8px 12px; }
+    .section h2 {
+      font-size:1.15em;
+      color:#7df9ff;
+      border-left:4px solid #00ffcc;
+      padding-left:10px;
+      margin-bottom:8px;
+      text-align:left;
+    }
+    .section p {
+      margin:4px 0;
+      font-size:1.03em;
+      line-height:1.6;
+      text-align:left;
+    }
+
+    .links {
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      margin-top:22px;
+      flex-wrap:wrap;
+    }
+
+    .btn {
+      display:inline-block;
+      background:linear-gradient(90deg,#00b3ff,#00ffcc);
+      padding:12px 28px;
+      border-radius:30px;
+      color:#002b36;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 6px 18px rgba(0,255,200,0.14);
+      transition:transform .25s ease, box-shadow .25s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    .btn::after {
+      content:''; position:absolute; left:-100%; top:0; width:100%; height:100%;
+      background:rgba(255,255,255,0.15); transition:left 0.4s ease;
+    }
+    .btn:hover::after { left:100%; }
+    .btn:hover { transform:translateY(-4px); box-shadow:0 18px 40px rgba(0,255,200,0.18); }
+
+    .back {
+      display:inline-block;
+      margin-top:28px;
+      color:#80c7c7;
+      text-decoration:none;
+      font-size:0.95em;
+    }
+
+    footer {
+      text-align:center;
+      color:#80c7c7;
+      font-size:0.9em;
+      margin-top:40px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:520px){
+      h1{ font-size:1.8em; }
+      .price-list{ padding:18px; }
+      .btn{ padding:10px 20px; }
+    }
+  </style>
 </head>
 <body>
-  <h1>💰 Прайс XXSINT</h1>
-  <div class="price-list">
+  <canvas id="waves"></canvas>
 
-    <div class="section">
-      <h2>💼 Защита в интернете (deff)</h2>
-      <p>Месяц — 100⭐️</p>
-      <p>Люкс месяц — 250⭐️</p>
-      <p>Навсегда — 500⭐️</p>
-      <p>Люкс навсегда — 1500⭐️</p>
+  <div class="content">
+    <h1>💰 Прайс by <span style="color:#00ffcc;">@xxsint</span></h1>
+
+    <div class="price-list">
+      <div class="section">
+        <h2>💼 Защита в интернете (deff)</h2>
+        <p>Месяц — <b>100⭐️</b></p>
+        <p>Люкс месяц — <b>250⭐️</b></p>
+        <p>Навсегда — <b>500⭐️</b></p>
+        <p>Люкс навсегда — <b>1500⭐️</b></p>
+      </div>
+
+      <div class="section">
+        <h2>🔍 Пр*бив</h2>
+        <p><b>125⭐️</b> — найду всю информацию о обидчике</p>
+      </div>
+
+      <div class="section">
+        <h2>🎓 Обучение</h2>
+        <p><b>550⭐️</b> — приватки, обучение OSINT и сносу</p>
+      </div>
+
+      <div class="section">
+        <h2>💻 Обучение по разработке</h2>
+        <p>Создание сайтов, ботов, приложений или игр — <b>1500⭐️</b></p>
+      </div>
+
+      <div class="section">
+        <h2>📩 Заказ</h2>
+        <p>Для заказа сайта или бота пишите сюда: <b>@xxsint 😎</b></p>
+      </div>
+
+      <div class="section">
+        <h2>🏴‍☠️ Оплата</h2>
+        <p>Возможна оплата через Stars / NFT</p>
+      </div>
+
+      <div class="links">
+        <!-- Кнопка для перехода в Telegram (открывается в новой вкладке) -->
+        <a class="btn" href="https://t.me/xxsint" target="_blank" rel="noopener">Написать @xxsint</a>
+
+        <!-- Внутренняя ссылка назад (плавный fade-out) -->
+        <a class="btn" href="index.html">⬅ Вернуться</a>
+      </div>
     </div>
 
-    <div class="section">
-      <h2>🔍 Пр*бив</h2>
-      <p>125⭐️ — найду всю информацию о обидчике</p>
-    </div>
-
-    <div class="section">
-      <h2>🎓 Обучение</h2>
-      <p>550⭐️ — приватки, обучение осинту и сносу</p>
-    </div>
-
-    <div class="section">
-      <h2>💻 Обучение по разработке</h2>
-      <p>Создание сайтов, ботов, приложений или игр — 1500⭐️</p>
-    </div>
-
-    <div class="section">
-      <h2>📩 Заказ</h2>
-      <p>Для заказа сайта или бота пишите сюда: <b>@xxsint😎</b></p>
-    </div>
-
-    <div class="section">
-      <h2>🏴‍☠️ Оплата</h2>
-      <p>Возможна оплата через Stars / NFT</p>
-    </div>
+    <footer>© 2025 xxsint — made with 💻 using HTML & CSS</footer>
   </div>
 
-  <a href="index.html" class="back">⬅️ Назад</a>
-
   <script>
-    window.addEventListener('load', () => {
-      document.body.classList.add('loaded');
+    // === Волны на canvas (как в других файлах) ===
+    const canvas = document.getElementById("waves");
+    const ctx = canvas.getContext("2d");
+    let w, h, t = 0;
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      // несколько слоёв волн
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, h / 2);
+        for (let x = 0; x < w; x++) {
+          const y = Math.sin((x + t * 50) / (100 + i * 50)) * (18 + i * 10) + h / 2 + (i * 18);
+          ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = `rgba(0, ${255 - i*60}, ${200 + i*30}, 0.25)`;
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+      }
+      t += 0.015;
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // Анимация загрузки
+    window.addEventListener("load", () => document.body.classList.add("loaded"));
+
+    // Плавный переход (fade-out) для внутренних ссылок (как в других файлах)
+    document.querySelectorAll('a[href]').forEach(link => {
+      // не трогаем ссылки с target="_blank"
+      if (link.getAttribute('target') !== '_blank') {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const url = link.getAttribute('href');
+          document.body.classList.add('fade-out');
+          setTimeout(() => window.location.href = url, 600);
+        });
+      }
     });
   </script>
 </body>
