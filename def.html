@@ -1,94 +1,87 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Def | xxsint</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
-    body {
-      background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
-      color:#fff;
-      overflow-x:hidden; /* ✅ разрешаем скролл */
-      opacity:0;
-      transform:translateY(30px);
-      transition:opacity 1s ease, transform 1s ease;
-      min-height:100vh;
-    }
-    body.loaded { opacity:1; transform:translateY(0); }
-    body.fade-out { opacity:0; transform:translateY(20px); }
-
-    canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; }
-
-    .content { position:relative; z-index:2; text-align:center; padding:100px 20px; max-width:700px; margin:0 auto; }
-
-    h1 {
-      font-size:2.3em;
-      color:#00ffcc;
-      text-shadow:0 0 20px #00b3ff,0 0 40px #00ffff;
-      animation:glow 3s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-      from { text-shadow:0 0 10px #00b3ff; }
-      to { text-shadow:0 0 30px #00ffff; }
-    }
-
-    p { font-size:1.1em; color:#d9fffc; margin-top:20px; line-height:1.8em; }
-
-    a {
-      display:inline-block; margin-top:30px;
-      background:linear-gradient(90deg,#00b3ff,#00ffcc);
-      padding:12px 30px; border-radius:30px;
-      color:#002b36; text-decoration:none;
-      font-weight:600; box-shadow:0 0 20px rgba(0,255,200,0.6);
-      transition:all 0.4s ease; position:relative; overflow:hidden;
-    }
-    a:hover { transform:scale(1.05); box-shadow:0 0 25px rgba(0,255,255,0.8); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XXSINT - DEF</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
+    color: #fff;
+    overflow-x: hidden; /* разрешаем вертикальную прокрутку */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  body.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 2.2em;
+  }
+  .content {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+  }
+  h2 {
+    font-size: 1.4em;
+    color: #00bfff;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  p {
+    text-align: center;
+    font-size: 1.05em;
+    margin: 10px 0;
+    line-height: 1.6;
+  }
+  .back {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    background: #00bfff;
+    color: #fff;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  .back:hover {
+    background: #0099cc;
+  }
+</style>
 </head>
 <body>
-  <canvas id="waves"></canvas>
+  <h1>🛡️ DEF — Защита XXSINT</h1>
+
   <div class="content">
-    <h1>💼 Защита в интернете (def)</h1>
-    <p>
-      Месяц — <b>100⭐️</b><br>
-      Люкс месяц — <b>250⭐️</b><br>
-      Навсегда — <b>500⭐️</b><br>
-      Люкс навсегда — <b>1500⭐️</b>
-    </p>
-    <a href="index.html">⬅ Вернуться</a>
+    <h2>💼 Бесплатный DEF (защита от @xxsint)</h2>
+    <p>Поставь в свой профиль этот текст, и защита активируется 👇</p>
+    <p><b>1. "Я под защитой @xxsint"</b></p>
+    <p>После этого отправь скрины сюда: <b>@xxsint</b></p>
   </div>
 
+  <div class="content">
+    <h2>🔒 Что даёт DEF</h2>
+    <p>• Защита от докса и атак</p>
+    <p>• Удаление фейков и вбросов</p>
+    <p>• Приоритетная помощь от команды XXSINT</p>
+  </div>
+
+  <a href="index.html" class="back">⬅️ Назад</a>
+
   <script>
-    const canvas=document.getElementById('waves'),ctx=canvas.getContext('2d');
-    let w,h,t=0;
-    function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
-    resize();addEventListener('resize',resize);
-
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      for(let i=0;i<3;i++){
-        ctx.beginPath();
-        for(let x=0;x<w;x++){
-          const y=Math.sin((x+t*50)/(100+i*40))*(15+i*8)+h/2;
-          ctx.lineTo(x,y);
-        }
-        ctx.strokeStyle=`rgba(0,255,${200+i*30},0.3)`;
-        ctx.lineWidth=1.8;ctx.stroke();
-      }
-      t+=0.015;requestAnimationFrame(draw);
-    }
-    draw();
-
-    window.addEventListener('load',()=>document.body.classList.add('loaded'));
-    document.querySelectorAll('a[href]').forEach(link=>{
-      link.addEventListener('click',e=>{
-        e.preventDefault();
-        const url=link.getAttribute('href');
-        document.body.classList.add('fade-out');
-        setTimeout(()=>window.location.href=url,600);
-      });
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
     });
   </script>
 </body>
