@@ -1,130 +1,160 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>XXSINT — DEF</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>xxsint — DEF</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
-  body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(180deg, #00141c 0%, #000a10 100%);
-    color: #e0f7fa;
-    overflow-x: hidden;
-  }
+    body {
+      background: radial-gradient(circle at bottom, #00171f 0%, #000a10 100%);
+      color:#fff;
+      overflow-x:hidden;
+      opacity:0;
+      transform:translateY(30px);
+      transition:opacity 1s ease, transform 1s ease;
+      min-height:100vh;
+    }
+    body.loaded { opacity:1; transform:translateY(0); }
+    body.fade-out { opacity:0; transform:translateY(20px); }
 
-  /* 🌊 Волны */
-  .wave {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 200%;
-    height: 250px;
-    background: repeating-linear-gradient(
-      -45deg,
-      rgba(0, 255, 255, 0.1),
-      rgba(0, 255, 255, 0.1) 10px,
-      transparent 10px,
-      transparent 20px
-    );
-    animation: moveWave 10s linear infinite;
-    opacity: 0.2;
-  }
-  @keyframes moveWave {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+    canvas {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:0;
+      background: radial-gradient(circle at bottom, #002b36 0%, #000a10 100%);
+    }
 
-  /* Заголовок */
-  h1 {
-    text-align: center;
-    margin-top: 80px;
-    font-size: 2.5em;
-    color: #00fff7;
-    text-shadow: 0 0 15px #00fff7;
-  }
+    .content {
+      position:relative;
+      z-index:2;
+      text-align:center;
+      padding:100px 20px;
+      max-width:800px;
+      margin:0 auto;
+    }
 
-  .section {
-    max-width: 700px;
-    margin: 40px auto;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 16px;
-    box-shadow: 0 0 20px rgba(0,255,255,0.15);
-    padding: 30px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(0,255,255,0.1);
-  }
+    h1 {
+      font-size:2.6em;
+      color:#00ffcc;
+      text-shadow:0 0 25px #00e6b8, 0 0 50px #00b3ff;
+      animation:glow 3s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow:0 0 15px #00b3ff, 0 0 30px #00ffc3; }
+      to { text-shadow:0 0 30px #00ffff, 0 0 60px #00b3ff; }
+    }
 
-  .section h2 {
-    text-align: center;
-    color: #00e5ff;
-    font-weight: 600;
-    margin-bottom: 15px;
-  }
+    h2 {
+      margin-top:60px;
+      font-size:1.6em;
+      color:#7df9ff;
+      border-left:4px solid #00ffcc;
+      padding-left:10px;
+      text-align:left;
+    }
 
-  .section p {
-    text-align: center;
-    line-height: 1.6;
-    font-size: 1.1em;
-    color: #ccfaff;
-  }
+    p {
+      font-size:1.05em;
+      color:#d9fffc;
+      margin-top:15px;
+      line-height:1.8em;
+      text-align:left;
+    }
 
-  a.button {
-    display: inline-block;
-    text-align: center;
-    background: #00e5ff;
-    color: #000;
-    padding: 12px 25px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-  }
-  a.button:hover {
-    background: #00ffff;
-    box-shadow: 0 0 15px #00ffff;
-  }
+    a.button {
+      display:inline-block;
+      background:linear-gradient(90deg,#00b3ff,#00ffcc);
+      padding:12px 30px;
+      border-radius:30px;
+      color:#002b36;
+      text-decoration:none;
+      font-weight:600;
+      box-shadow:0 0 20px rgba(0,255,200,0.6);
+      transition:all 0.4s ease;
+      position:relative;
+      overflow:hidden;
+    }
+    a.button::after {
+      content:''; position:absolute; left:-100%; top:0; width:100%; height:100%;
+      background:rgba(255,255,255,0.25); transition:left 0.4s ease;
+    }
+    a.button:hover::after { left:100%; }
+    a.button:hover { transform:scale(1.05); box-shadow:0 0 30px rgba(0,255,255,0.8); }
 
-  .btn-container {
-    text-align: center;
-    margin: 40px 0;
-  }
-
-  footer {
-    text-align: center;
-    font-size: 0.9em;
-    color: #6deaff;
-    margin-bottom: 50px;
-  }
-</style>
+    footer {
+      text-align:center;
+      color:#80c7c7;
+      font-size:0.9em;
+      margin-top:80px;
+    }
+  </style>
 </head>
 <body>
+  <canvas id="waves"></canvas>
 
-  <div class="wave"></div>
+  <div class="content">
+    <h1>🛡️ DEF — Защита XXSINT</h1>
 
-  <h1>🛡️ DEF — Защита XXSINT</h1>
-
-  <div class="section">
     <h2>💼 Бесплатный DEF (защита от @xxsint)</h2>
     <p>Поставь в свой профиль этот текст, и защита активируется 👇</p>
     <p><b>1. "Я под защитой @xxsint"</b></p>
     <p>После этого отправь скрины сюда: <b>@xxsint</b></p>
-  </div>
 
-  <div class="section">
     <h2>🔒 Что даёт DEF</h2>
     <p>• Защита от докса и атак</p>
     <p>• Удаление фейков и вбросов</p>
     <p>• Приоритетная помощь от команды XXSINT</p>
+
+    <div style="margin-top:40px;">
+      <a href="index.html" class="button">⬅️ Назад</a>
+    </div>
+
+    <footer>© 2025 xxsint — made with 💻 using HTML & CSS</footer>
   </div>
 
-  <div class="btn-container">
-    <a href="index.html" class="button">⬅️ Назад</a>
-  </div>
+  <script>
+    const canvas = document.getElementById("waves");
+    const ctx = canvas.getContext("2d");
+    let w, h, t = 0;
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
 
-  <footer>© 2025 XXSINT | Все права защищены</footer>
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        for (let x = 0; x < w; x++) {
+          const y = Math.sin((x + t * 50) / (100 + i * 50)) * (20 + i * 10) + h / 2;
+          ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = `rgba(${0},${255 - i*60},${200 + i*30},0.3)`;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+      }
+      t += 0.015;
+      requestAnimationFrame(draw);
+    }
+    draw();
 
+    window.addEventListener("load", () => document.body.classList.add("loaded"));
+    document.querySelectorAll("a[href]").forEach(link => {
+      if (link.getAttribute("target") !== "_blank") {
+        link.addEventListener("click", e => {
+          e.preventDefault();
+          const url = link.getAttribute("href");
+          document.body.classList.add("fade-out");
+          setTimeout(() => (window.location.href = url), 600);
+        });
+      }
+    });
+  </script>
 </body>
 </html>
